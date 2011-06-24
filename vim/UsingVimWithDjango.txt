@@ -1,0 +1,264 @@
+= Using Vim with Django =
+This page is intended to be used as a collection of hints for using the Vim editor with Django.
+
+
+[[TOC(inline, UsingVimWithDjango)]]
+
+== Tips ==
+=== Vim Modeline ===
+To ensure that all developers are using a standard tab format (as long as they are using Vim), you can add a Vim modeline (special comment) to your files, to set people in the same mode for that file.  Example:
+
+{{{
+# vim: ai ts=4 sts=4 et sw=4
+}}}
+
+[http://py.vaults.ca/~x/python_and_vim.html Tab Setting Reference for Python and Vim]
+
+=== Omnicomplete ===
+Here's a [http://blog.fluther.com/blog/2008/10/17/django-vim/ tutorial] for enabling omnicompletion specifically for django.
+
+Also under development: [http://orestis.gr/blog/2008/10/13/pysmell-v06-released/ PySmell]
+
+== Plugins ==
+=== snippetsEmu ===
+Development takes place on [http://code.google.com/p/snippetsemu Google Code], where the subversion repository includes predefined snippets for django/python/etc.
+
+[http://www.vim.org/scripts/script.php?script_id=1318 SnippetsEmu] allows one to define abbreviations which can be expanded into larger blocks of text.  The abbreviations can also contain place markers which can be 'jumped to' in a similar manner to the macros defined in TextMate on OS X.
+
+One can add specific abbreviations for models or templates based on file contents.  Adding the following line to your ~/.vim/after/ftplugin/python.vim file (create it if you don't have it) will allow you to define abbreviations just for models (use the file \Program Files\vim\vimfiles\after\ftplugin\python.vim under Windows):
+{{{
+if getline(1) =~ 'from django.db import models'
+    "Your abbreviations here
+endif
+}}}
+
+The following is an example collection of Django specific abbreviations for use with the plugin. More examples can be found in the [http://snippetsemu.googlecode.com/svn/trunk/after/ftplugin/ subversion repository]. Please email the author with any of your own additions (f dot ingram dot lists at gmail dot com):
+
+Models:
+{{{
+Snippet addmodel class <{}>(models.Model):<CR><><CR><CR>def __unicode__(self):<CR>return "%s" % (<{}>,)
+Snippet mcf models.CharField(max_length=<{}>)<CR><{}>
+Snippet mff models.FileField(upload_to=<{}>)<CR><{}>
+Snippet mfpf models.FilePathField(path=<{}>, match="<{}>", recursive=<False>)<CR><{}>
+Snippet mfloat models.FloatField(max_digits=<{}>, decimal_places=<{}>)<CR><{}>
+Snippet mfk models.ForeignKey(<{}>)<CR><{}>
+Snippet m2m models.ManyToManyField(<{}>)<CR><{}>
+Snippet o2o models.OneToOneField(<{}>)<CR><{}>
+}}}
+
+Templates:
+
+{{{
+Snippet fore {% for <{entry}> in <{list}> %}<CR>{{ <{entry}>.<{}> }}<CR><{}>{% endfor %}<CR><{}>
+}}}
+
+snippetsEmu for '''urls.py''' and '''views.py''' files can be found on the attachment section. To use this snippets, copy them into ''~/.vim/after/ftplugin/'' directory
+
+
+=== !SnipMate.vim ===
+
+[http://www.vim.org/scripts/script.php?script_id=2540 SnipMate] is another plugin that adds TextMate-style snippets for Vim.  The [http://github.com/robhudson/snipmate_for_django/tree/master snipmate_for_django] Git repository, by Rob Hudson, contains many of the TextMate snippets converted to !SnipMate.
+
+=== XMLEdit.vim ===
+The [http://www.vim.org/scripts/script.php?script_id=301 xmledit.vim] plugin is really useful for editing XML and HTML files.  It makes tag completion easy and allows you to bounce between start and end tags.
+
+=== Syntax for templates === 
+
+Dave Hodder has contributed standard [http://www.vim.org/scripts/script.php?script_id=1487 Vim syntax files].
+
+If you are interested in rolling your own, this is a simple addition to let Vim deal with Django template syntax:
+
+Create the file:
+{{{$VIM/vimfiles/after/syntax/html.vim}}}
+with the following content:
+
+{{{
+syn region  djangotagmarkers start="{{" end="}}"
+syn region  djangovariablemarkers start="{%" end="%}"
+command! -nargs=+ HiLink hi def link <args>
+HiLink djangotagmarkers PreProc
+HiLink djangovariablemarkers PreProc
+delcommand HiLink
+}}}
+
+
+=== Project.vim ===
+The [http://www.vim.org/scripts/script.php?script_id=69 Project] plugin adds IDE file organisation functionality to Vim.
+
+Something like the following could be used to view a project's files. It looks scary but is definitely worth trying.
+
+{{{
+Django Project=/path/to/project CD=. filter="[^_]*.py" {
+ settings.py
+ urls.py
+ apps=apps {
+  Polls=polls {
+   views.py
+   models.py
+  }
+  ToDo=todo {
+   views.py
+   models.py
+  }
+ media=mediaDir {
+  images=imagesDir {
+  }
+ }
+}
+}}}
+
+Such a structure can also be created by using the built-in '\C' command which will recurse through the whole directory tree.
+
+=== Tag List ===
+
+The [http://vim-taglist.sourceforge.net/ taglist] plugin is probably similar to Project but can also look inside Python files to display classes and functions. (It requires the ctags program installed on your system, which probably comes with most Linuxes and is easily installed via MacPorts (or fink as "exuberant-ctags") on OS X.)
+
+[http://code.djangoproject.com/attachment/wiki/UsingVimWithDjango/django-vim-taglist.png screenshot]
+
+Additionally, I created a shell-function, inspired by Jeremy Jones, to create a new taglist-list when you pass it the path to a Django project directory:
+
+{{{
+djvim() {
+     gvim "+cd $1" "+TlistAddFilesRecursive . [^_]*py\|*html\|*css" +TlistOpen
+}
+}}}
+
+=== Pyflakes ===
+
+The [http://www.vim.org/scripts/script.php?script_id=2441 pyflakes] plugin highlights common Python errors like misspelling a variable name on the fly. It also warns about unused imports, redefined functions, etc. 
+
+This plugin is fast enough that it registers itself with vim hooks for leaving insert mode and saving a buffer, so that the warnings are always up to date.
+
+== Vim/IDE ==
+=== PIDA ===
+
+Although this is not Django-specific (I don't think some of the other stuff in here is very Django-specific either), [http://pida.co.uk PIDA] looks like a pretty nice IDE environment for VIM+Python, which would therefore help you out in Django :).
+
+== Mappings ==
+
+I have this in my vimrc to make file jumps between relative django files easier. 
+{{{
+let g:last_relative_dir = ''
+nnoremap \1 :call RelatedFile ("models.py")<cr>
+nnoremap \2 :call RelatedFile ("views.py")<cr>
+nnoremap \3 :call RelatedFile ("urls.py")<cr>
+nnoremap \4 :call RelatedFile ("admin.py")<cr>
+nnoremap \5 :call RelatedFile ("tests.py")<cr>
+nnoremap \6 :call RelatedFile ( "templates/" )<cr>
+nnoremap \7 :call RelatedFile ( "templatetags/" )<cr>
+nnoremap \8 :call RelatedFile ( "management/" )<cr>
+nnoremap \0 :e settings.py<cr>
+nnoremap \9 :e urls.py<cr>
+
+fun! RelatedFile(file)
+    #This is to check that the directory looks djangoish
+    if filereadable(expand("%:h"). '/models.py') || isdirectory(expand("%:h") . "/templatetags/")
+        exec "edit %:h/" . a:file
+        let g:last_relative_dir = expand("%:h") . '/'
+        return ''
+    endif
+    if g:last_relative_dir != ''
+        exec "edit " . g:last_relative_dir . a:file
+        return ''
+    endif
+    echo "Cant determine where relative file is : " . a:file
+    return ''
+endfun
+
+fun SetAppDir()
+    if filereadable(expand("%:h"). '/models.py') || isdirectory(expand("%:h") . "/templatetags/")
+        let g:last_relative_dir = expand("%:h") . '/'
+        return ''
+    endif
+endfun
+autocmd BufEnter *.py call SetAppDir()
+}}}
+
+== Surround Mappings ==
+
+This is for the popular surround script [http://www.vim.org/scripts/script.php?script_id=1697 here]
+
+in your .vimrc 
+{{{
+
+let g:surround_{char2nr("b")} = "{% block\1 \r..*\r &\1%}\r{% endblock %}"
+let g:surround_{char2nr("i")} = "{% if\1 \r..*\r &\1%}\r{% endif %}"
+let g:surround_{char2nr("w")} = "{% with\1 \r..*\r &\1%}\r{% endwith %}"
+let g:surround_{char2nr("c")} = "{% comment\1 \r..*\r &\1%}\r{% endcomment %}"
+let g:surround_{char2nr("f")} = "{% for\1 \r..*\r &\1%}\r{% endfor %}"
+
+}}}
+
+now in visual mode type 
+
+    * 'sb' for block
+    * 'si' for an if statement
+    * 'sw' for a with statement
+    * 'sc' for a comment
+    * 'sf' for a for statement
+
+== Pony.vim ==
+
+Pony.vim is a plugin for working with Django projects. Visit the [https://github.com/rainerborene/vim-pony/ repository] on GitHub for more information.
+
+== Suggestions ==
+=== Django Project Manager: By panosl ===
+
+The idea is to create a plugin, that will wrap the functionality of django-admin/manage.py along with project.vim.
+
+This will one to create a new django project from within vim, and generating a Project file with all the files pre-specified. This could be extended to allow, the creation of apps within the project, leveraging the usage of manage.py.
+
+So a regular session would be:
+{{{
+:djsp [projectname]
+
+# This will in turn generate the required Project file with all the files of the project.
+}}}
+
+{{{
+:djsa [appname]
+
+# This will create a new app, and update the Project file with the new data regarding the application.
+}}}
+
+
+At this point, this is enough, even though we could still wrap a bit more of django-admin/manage, by allowing inner commands to launch/stop the test server and similar additions.
+
+In my opinion this would help with django development and help focus more on the development that usually happens within the editor, which in our case, is ofcourse (G)Vim.
+
+==== Comments ====
+
+These are some notes for anyone considering writing this plugin.
+
+ * Vim has the 'read' command which can read the output from a command into a buffer using the pling operator. E.g. :read !dir will read a directory listing into the current buffer.
+ * Vim has special buffers for storing different types of output. See :help special-buffers and :help cwindow
+ * The Project plugin has the function CreateEntriesFromDir() which can be used to create new entries. Passing '1' as the arguement will create a recursive entry which would be most appropriate for creating Django entries.
+ * The Project plugin allows users to use a different project file from the default. It could be that the new plugin generates a project specific file when a new django project is created.
+
+The following code can used to create Project entries in a buffer. Note that various settings will be altered by the call to DoSetup so it's probably best to use a new buffer.
+
+{{{
+function! GetProjectSNR()
+    if exists(":Project")
+        let a_sav = @a
+        redir @a
+        exec "silent function"
+        redir END
+        let funclist = @a
+        let @a = a_sav
+        let func = split(split(matchstr(funclist,'.SNR.\{-}GenerateEntry'),'\n')[-1])[1]
+        return matchlist(func, '\(.*\)G')[1]
+    endif
+endfunction
+
+function! Test()
+    let SNR = GetProjectSNR()
+    call {SNR}DoSetup()
+    call {SNR}DoEntryFromDir(0, line("."), 'test', 'c:\temp', 'c:\temp', '', '', '*', 0, 0)
+    return ''
+endfunction
+}}}
+
+Grabbing the SNR isn't pretty but seems to work and prevents having to recreate the work done in Project.
+
+It would be useful for the plugin to grab any tracebacks and place the cursor in a suitable spot.
