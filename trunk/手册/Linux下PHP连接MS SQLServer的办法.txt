@@ -1,0 +1,55 @@
+提出问题
+
+    前几天做了一个非常奇怪的项目，我公司开发了一套基于中国联通SGIP协议的SP端短消息服务软件，提供联通130短信服务。这套系统是Windows 2000下的，数据库采用的是微软SQLServer2000，并且已经正常运行了一段时间。而最近由于要在WEB上提供短消息用户的一些信息，就需要从 WEB上读写SQLServer数据库，本来SQLServer数据库的最佳搭档应该是微软IIS ASP服务端脚本，但我公司一向认为IIS+ASP的稳定性和安全性都不尽如意，希望能够在Linux下用PHP脚本读写SQLServer。
+分析问题
+
+    本来PHP脚本读写SQLServer是没有什么问题的，在Apache for windows和Windows IIS下可以工作的很好，一般可以通过ODBC或SQLServer Client连接，这都是Windows下面现成的。但是在Linux下面没有现成的ODBC和SQLServer Client，需要我们自己安装。
+
+解决问题
+
+一、相关软件
+    freetds 来源：ftp://ftp.ibiblio.org/pub/Linux/ALPHA/freetds/freetds-0.53.tgz
+    这个软件能够用Linux和Unix连接MS SQLServer和Sybase数据库。
+
+二、安装配置步骤
+
+    第一步：编译安装freetds:
+    得到freetds-0.53.tgz后
+    cp freetds-0.53.tgz /tmp/. （拷贝freetds包到/tmp目录）
+    cd /tmp （进入目录）
+    tar zxvf freetds-0.53.tgz （解压）
+    cd freetds-0.53 （进入解压后目录）
+    ./configure –prefix=/usr/local/freetds --with-tdsver=7.0
+    gmake （生成Makefile，我试验过，make也可以）
+    gmake install （安装）
+    关于上面configure我想说一下，--prefix=/usr/local/freetds是指安装到/usr/local/freetds这个目录中，--with-tdsver=7.0是指安装tds 7.0版本（最开是我没有加这个编译参数，结果按照默认编译为5.0。5.0连接数据库的端口是4000，不是SQLServer的1433）
+
+    第二步：重新编译PHP
+    ./configure [--with-apxs --with-mysql...] --with-sybase=/usr/local/freetds（请注意是sybase）
+    make
+    make install
+    第三步:配置freetds
+    vi /usr/local/freetds/etc/freetds.conf
+    具体配置见该文件中的说明
+    例: （典型配置）
+    [sqlserver]
+    host = sql_server_name_or_host_ip （你的SQLServer机器名字或者IP地址）
+    port = 1433
+    tds version = 7.0
+    在这个配置文件中可以配置Windows域登陆或者SQLServer账号登陆两种方式
+
+    第四步:配置php.ini文件
+    找到 ;extension=mssql70.so
+    将注释;去掉成
+    extension=mssql70.so
+
+第五步:在php中建立数据库连接
+    $link=mssql_connect("sqlserver",$your_username,$your_password) or die (“can’t Connect to Database”);
+    echo $link;
+    在浏览器中运行上面脚本， 如果你得到一个link号那么恭喜，你已经配置好了，如果出现Call to undefined function:     mssql_connect() 那说明仔细看上面的安装配置过程看你哪一步没有对。
+    注意:sqlserver名称是在/usr/local/freetds/etc/freetds.conf中定义的host参数，如果你写的IP地址，就是IP地址。
+    其他数据库操作参考相关mssql函数
+    注意,在sql语句中不支持中文!!!
+
+    第六步：调试
+    如果出现不能连接，请在freetds配置文件中找到;dump file = /tmp/freetds.log这一行，注释掉前面的分号，再执行一下测试脚本，察看/tmp/freetds.log文件，它可以告诉你很多出错的信息帮助你排除问题。
