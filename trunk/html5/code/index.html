@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+
+<!--
+  Google HTML5 slide template
+
+  Authors: Luke Mah茅 (code)
+           Marcin Wichary (code and design)
+           
+           Dominic Mazzoni (browser compatibility)
+           Charles Chen (ChromeVox support)
+
+  URL: http://code.google.com/p/html5slides/
+-->
+<!--
+  @author 	jingleyang@tencent.com
+  @description 	HTML5在浏览器开发中的使用
+  @date 	2011-07-05
+-->
+<html>
+  <head>
+    <title>HTML5在浏览器开发中的使用</title>
+    <meta charset='utf-8'>
+    <script src='js/slides.js'></script>
+  </head>
+  
+  <style>
+    /* Your individual styles here, or just use inline styles if that鈥檚
+	what you want. */
+@font-face {
+  font-family: 'La Belle Aurore';
+  font-style: normal;
+  font-weight: normal;
+  src: local('La Belle Aurore'), local('LaBelleAurore'), url('res/LaBelleAurore.woff') format('woff');
+}
+
+	.li-img{
+		display:inline-block;
+		width:36px;
+		height:36px;
+		margin-right:20px;
+	}
+	.li-img[name='adobe']{
+		background:url(images/adobe.jpg) -80px 0px no-repeat;
+	}
+	.li-img[name='qt']{
+		background:url(images/qt.png) no-repeat;
+		background-size:30px 36px ; 
+	}
+
+#app-closebtn {
+	margin:10px auto 0px auto;
+    height: 15px;
+    width: 15px;
+    background: url(images/close_normal.png) center center no-repeat;
+    -webkit-transition: background .3s ease-out;
+}
+#app-closebtn:hover {
+    background: url(images/close_hover.png) center center no-repeat;
+    -webkit-transition: background .2s ease-in;
+}
+
+#app-closebtn:active {
+    background: url(images/close_pressed.png) center center no-repeat;
+    -webkit-transition: background .2s ease-in;
+}
+@-webkit-keyframes loadforever{
+	100%{
+		-webkit-transform:rotate(360deg)
+	}
+}
+
+#loading{
+	-webkit-animation:loadforever 1s infinite linear;
+	background:url(images/loading.png);
+	width:16px;
+	height:16px;
+}
+</style>
+
+  <body style='display: none'>
+
+    <section class='slides layout-regular template-io2011'>
+      
+      <!-- Your slides (<article>s) go here. Delete or comment out the
+           slides below. -->
+        
+        
+      
+      <article class='biglogo'>
+      </article>
+
+      <article>
+        <h1>
+			HTML5在浏览器开发<br/>
+			中的使用
+        </h1>
+        <p>
+         jingleyang(杨经宇) 
+          <br>
+           2011-07-16
+        </p>
+      </article>
+      <article>
+		<h3>自我介绍</h3>
+		<ul>
+			<li> 杨经宇 <span>jingleyang</span></li>
+			<li> 腾讯研究院 浏览器技术中心 web后台组开发</li>
+			<li> 热爱编程 热爱开源技术</li>
+			<li> Linux, socket, server, php, Qt ... ...</li>
+			<li> QQ: 287245460</li>
+			<li> Email: <a href='mailto://yjyfrombnu@gmail.com'>yjyfrombnu#gmail.com</a></li>
+			<li><a href='http://browser.qq.com/' target='_black'>browser.qq.com</a></li>
+
+			<li><a href='http://browser5.sinaapp.com' target='_black'>ppt: browser5.sinaapp.com</a></li>
+		</ul>
+	</article>
+      <article>
+      	<h3>
+			内容介绍
+		</h3>
+        <ul class='build'>
+          <li>
+            应用程序 web 化
+          </li>
+          <li>
+            CSS3 在皮肤中的使用
+          </li>
+          <li>
+			HTML5 存储在首页的应用
+          </li>
+          <li>
+			网页查找功能
+          </li>
+		  <li>
+			网页缩放功能
+		  </li>
+		  <li>
+			开发中的思考
+		  </li>
+		</ul>	
+      </article>
+
+      <article>
+        <h3>	
+            应用程序 web 化
+		</h3>
+		<ul class='build'> 
+			<li>
+				<div class='li-img' name='adobe'></div>Adobe AIR 
+			</li>
+			<li>
+				<div class='li-img' name='qt'></div>QT
+			</li>
+			<li>
+				<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKsAAAAgCAYAAABtn4gCAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDpGOTdGMTE3NDA3MjA2ODExODhDNkMyNDRFMTVCNUEwOSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDoxQzlFNjQzRjQyREMxMUUwQTFFQ0RGNTlGMzNBRTIwQSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDoxQzlFNjQzRTQyREMxMUUwQTFFQ0RGNTlGMzNBRTIwQSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjA0ODAxMTc0MDcyMDY4MTFCNjk5RjQ4RDZEMjY3RTI3IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkY5N0YxMTc0MDcyMDY4MTE4OEM2QzI0NEUxNUI1QTA5Ii8+IDwvcmRmOkRlc2NyaXB0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" jstcache="0"><a href='http://code.google.com/p/chromiumembedded/'>
+chromiumembedded</a>
+			</li>
+			<li><img src='images/index.png'/></li>
+        </ul>
+      </article>
+
+	  <article>
+	  	<h3>
+			Chrome & Firefox & QQbrowser
+		</h3>
+		<ul class='build'>
+			<li>
+				使用网页技术进行UI呈现
+			</li>
+			<li>
+				浏览器除了渲染网页还可以	
+			</li>
+			<li>
+				皮肤引擎三要素
+			</li>
+			<li>
+				------ 结构 <span>HTML</span>
+			</li>
+			<li>
+				------ 逻辑 <span>JavaScript</span>
+			</li>
+			<li>
+				------ 样式 <span>CSS</span>
+			</li>
+		</ul>
+	  </article>
+	  <article>
+		<h3>圆角</h3>
+		<ul class='build'>
+			<li>最贴心的设计</li>
+			<li><img src='images/radius.png'></li>
+		</ul>
+	  </article>
+	  <article>
+		<h3>CSS 伪类</h3>
+		<ul class='build'>
+			<li>代替js实现交互细节</li>
+			<li><div id='app-closebtn'></div></li>
+<pre>
+#app-closebtn:active {
+    background: url(images/close_pressed.png) center center no-repeat;
+    -webkit-transition: background .2s ease-in;
+}
+#app-closebtn:hover {
+    background: url(images/close_hover.png) center center no-repeat;
+    -webkit-transition: background .2s ease-in;
+}
+</pre>
+		</ul>
+	  </article>
+	  <article>
+		<h3>BOX 布局</h3>
+		<ul class='build'>
+			<li>水平排布的方法 <span>float span inline-block table</span></li>
+			<li>思维方式 <span>横平竖直</span></li>
+			<li>
+<pre>
+.home-tabpage-row {
+display: -webkit-box;
+-webkit-box-orient: horizontal;
+-webkit-box-pack: justify;
+}
+</pre>
+			</li>
+			<li>-webkit-box-flex <span>优雅的弹簧</span></li>
+		</ul>
+	  </article>
+	  <article>
+		<h3>动画</h3>
+		<ul class='build'>
+			<li><div id='loading'></div></li>
+			<li>
+<pre>
+@-webkit-keyframes loadforever{
+	100%{
+		-webkit-transform:rotate(360deg)
+	}
+}
+#loading{
+	-webkit-animation:loadforever 1s infinite linear;
+	background:url(images/loading.png);
+	width:16px;
+	height:16px;
+}
+</pre>
+			</li>
+		</ul>
+	</article>
+<article class="current">
+	  <h3>webStorage 存储</h3>
+	  <ul>
+			  <li>cookie存在问题 <span>http协议, 同源共享, XSS</span></li>
+			  <li>sessionStorage <span>可见性:页面内,生命周期:页面关闭销毁</span></li>
+			  <li>localStorage <span>可见性:同源页面,生命周期:主动清除缓存时销毁</span></li>
+			  <li>key value 形式 <span>setItem,getItem,key</span></li>
+			  <li>
+<pre>
+window.addEventListener('storage',eventHandler,false);
+</pre>			  
+			  </li>
+			  <li>保存草稿,数据缓存</li>
+			  <li>同源页面,tab页间通信</li>
+	  </ul>	  
+	  </article>
+	
+	<article>
+		<h3>localStorage 在首页中的使用</h3> 
+		<ul class='build'>
+			<li>网站与本地程序具有不同的交互预期</li>
+			<li>记住上次的选择</li>
+			<li>数据缓存</li>
+			<li><img src='images/local.png'></li>
+		</ul>
+	</article>
+
+	<article class='nobackground' onslideenter="iframeEnter();" onslideleave="iframeLeave();">
+		<h3>网页查找功能  ctrl+f</h3>
+		<iframe src='res/search.html'></iframe>	
+	</article>
+	<article>
+		<h3>DOM节点遍历</h3>
+		<div class='build'>
+<pre>
+var walker = document.createTreeWalker(  document.body,
+	NodeFilter.SHOW_ELEMENT,{
+	acceptNode: function(node){
+		 if (node.childElementCount){
+			return NodeFilter.FILTER_SKIP; 
+		 }else{ // end node
+			var name = node.nodeName;
+			if ("SCRIPT"== name || ...){
+				return NodeFilter.FILTER_SKIP; 
+			}	
+			return NodeFilter.FILTER_ACCEPT; 
+		 }
+	 }
+	 },
+	false);
+</pre>
+		</div>
+	</article>
+	<article>
+	<div class='build'>
+<pre>
+while(walker.nextNode()){
+	var node = walker.currentNode;
+	qbsearch.cache.push({
+		ptr:node,
+		oldtext:node.innerText
+	});
+}
+</pre>
+	</div>
+	</article>
+	<article>
+		<h3>动态插入CSS样式</h3>
+<div class='build'>
+<span>document.createStyleSheet</span>
+<pre>
+if(document.createStyleSheet){
+	var style = document.createStyleSheet();
+	style.cssText = str_css;
+}else{
+	var style = document.createElement("style");
+	style.type = "text/css";
+	style.textContent = str_css;
+	document.getElementsByTagName("HEAD").item(0).appendChild(style);
+}
+</div>
+</pre>
+	</article>
+	<article class='nobackground' onslideenter="iframeEnter();" onslideleave="iframeLeave();">
+		<h3>网页缩放功能</h3>
+		<div>Alt+j/k</div>
+		<iframe src='res/zoom.html' ></iframe>
+	</article>
+	<article>
+		<h3>实现方式</h3>
+		<ul class='build'>
+		<li>zoom</li>
+		<li>-webkit-transform: scale(2);</li>
+		</ul>
+	</article>
+	<article>
+		<h3>开发中的思考</h3>
+		<ul class='build'>
+			<li>内核实现 <span>C++ 接口, 效率高</span></li>
+			<li>js注入实现 <span>简单方便, 开发成本少</span></li>
+			<li>开发效率与程序的效率并重</li>
+		</ul>
+	</article>
+	<article>
+			<h3>致谢</h3>
+			<div style='margin:50px auto 50px auto;'>
+<div>感谢师傅 sunny</div>
+<div>感谢 HTML5 研究小组无私的分享</div>
+<div>谢谢大家</div>
+			</div>
+			<div> 祝愿 HTML5 研究小组 在HTML5领域大展宏图</div>
+			<div style="font-family: 'La Belle Aurore'; font-size:48px ; margin-top:200px; text-align:right "> Thank you!</div>	
+	</article>
+	<article>
+		<h3>Q&A</h3>
+		<ul class='build'>
+			<li>对QQbrowser有什么好的建议和意见</li>
+			<li>用网页技术制作PPT</li>
+			<li>... ...</li>
+		</ul>
+	</article>
+    </section>
+	<script type='text/javascript'>
+	// test code
+function canvasTest1(){
+	var canvas = document.getElementById('canvasTest1'); // 获得canvas
+	var ctx = canvas.getContext('2d'); // 获得 2d context
+	ctx.fillStyle='hsl(52, 100%, 50%)';
+	var halfwidth=50;
+	// 画4 个RECT
+	ctx.fillRect(0,0,halfwidth,halfwidth);
+	ctx.fillStyle='hsl(90, 100%, 40%)';
+	ctx.fillRect(halfwidth,0,halfwidth,halfwidth);
+	ctx.fillStyle='hsl(204, 100%, 50%)';
+	ctx.fillRect(0,halfwidth,halfwidth,halfwidth);
+	ctx.fillStyle='hsl(12, 100%, 50%)';
+	ctx.fillRect(halfwidth,halfwidth,halfwidth,halfwidth);
+	ctx.fillStyle='white';
+	
+	ctx.globalAlpha=0.2;
+	for (var i=0; i<5; i++){ // 画圆圈
+		ctx.beginPath();
+		ctx.arc(halfwidth,halfwidth,10+10*i,0,Math.PI*2,true);
+		ctx.fill();
+	}
+}
+
+function videoTest(){
+	var target = event.target;
+	var currSrc = target.currentSrc;
+	var type=currSrc.substr(-4,4);
+	if ("webm" === type){
+		if (target.currentTime==0){
+			target.currentTime=67;
+		}		
+	}
+	target.play();
+}
+
+var webworker={
+	worker:null,
+	calc:function(){
+		if (webworker.worker){
+			webworker.cancle();
+		}
+		var value = document.getElementById('workerPara').value;
+		value= parseInt(value);
+		
+	document.getElementById('calcDisplay').innerText = 'calc ...';
+		webworker.worker = new Worker('res/worker/calc.js');
+		webworker.worker.addEventListener('message',function(){
+			var para = event.data;
+			document.getElementById('calcDisplay').innerText = para.ret;
+			console.info(para);
+		},false);
+		webworker.worker.postMessage({cmd:'start','value':value});	
+	},
+	cancle:function(){
+		document.getElementById('calcDisplay').innerText = 'cancle ...';
+		webworker.worker.terminate();
+		webworker.worker=null;
+	}
+};
+var postHdl={
+	iframeHdl:function(ev){
+		console.info(ev);
+		var olddata = 	document.getElementById("postMsg").innerText;
+	    olddata+="\r\n";	
+		document.getElementById("postMsg").innerText=olddata + ev.data;
+	}
+};
+	window.addEventListener("message",postHdl.iframeHdl,false);
+	</script>
+</script>
+  </body>
+</html>
