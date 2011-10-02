@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<style>
+		#test{
+			magin:100px;
+		}
+	</style>
+</head>
+<body>
+	<div id='test'>
+		<div id="proNav" onclick="register0410('proarea',1);">
+	<div><span>通信</span><a href="http://mail.qq.com/" class="qq">QQ邮箱</a><a href="http://pc.qq.com/" class="qq">QQ软件</a><a href="http://t.qq.com/?from=12" class="lchot">微博</a><a href="http://show.qq.com/" class="qq">QQ秀</a><a href="http://vip.qq.com/" class="qq">会员</a><a href="http://zc.qq.com/">号码</a><a href="http://pcmgr.qq.com/?ADTAG=tr.pcmgr.qqcom.QQCOM" class="qq">QQ电脑管家</a></div>
+	<div><span>社区</span><a href="http://qzone.qq.com/" class="qq">QQ空间</a><a href="http://www.pengyou.com">朋友</a><a href="http://photo.qq.com/">相册</a><a href="http://music.qq.com/" class="qq">QQ音乐</a><a href="http://v.qq.com/">视频</a><a href="http://boke.qq.com/">播客</a><a href="http://blog.qq.com/">精英博客</a></div>
+	<div class="gamemouse" onmouseover="this.className='gameover';" onmouseout="this.className='gamemouse';">
+	<div><span>休闲</span><a href="http://qqgame.qq.com/?ADTAG=media.innerenter.qqcom.index_navigation" class="qq lchot">QQ游戏</a><a href="http://fight.qq.com/?ADTAG=media.innerenter.qqcom.index_navigation">大乐斗</a><a href="http://bear.qq.com/?ADTAG=media.innerenter.qqcom.index_navigation">小熊</a><a href="http://www.3366.com/?ADTAG=media.innerenter.qqcom.index_navigation" class="qq">3366小游戏</a><a href="http://17roco.qq.com/?ADTAG=media.innerenter.qqcom.index_navigation">洛克王国</a><a href="http://7.qq.com/?ADTAG=media.innerenter.qqcom.index_navigation">七雄</a><a href="http://xb.qq.com/?ADTAG=media.innerenter.qqcom.index_navigation">小白</a></div>
+	<div><span>竞技</span><a href="http://cf.qq.com/?ADTAG=media.innerenter.qqcom.index_navigation">穿越火线</a><a href="http://dnf.qq.com/?ADTAG=media.innerenter.qqcom.index_navigation">地下城与勇士</a><a href="http://lol.qq.com/?ADTAG=media.innerenter.qqcom.index_navigation">英雄联盟</a><a href="http://speed.qq.com/?ADTAG=media.innerenter.qqcom.index_navigation" class="qq">QQ飞车</a><a href="http://x5.qq.com/?ADTAG=media.innerenter.qqcom.index_navigation" class="qq">QQ炫舞</a></div>
+	<div><span>网游</span><a class="qq" href="http://xxz.qq.com/?ADTAG=media.innerenter.qqcom.index_navigation">QQ仙侠传</a><a class="qq" href="http://qqxy.qq.com/index.shtml?ADTAG=media.innerenter.qqcom.index_navigation">QQ西游</a><a href="http://hxsj.qq.com/main.shtml?ADTAG=media.innerenter.qqcom.index_navigation">幻想世界</a><a href="http://xx.qq.com/?ADTAG=media.innerenter.qqcom.index_navigation">寻仙</a><a href="http://sg.qq.com/?ADTAG=media.innerenter.qqcom.index_navigation">三国</a><a href="http://game.qq.com/?ADTAG=media.innerenter.qqcom.index_navigation" class="s">更多腾讯游戏</a></div>
+	</div>
+	<div><span>手机</span><a href="http://mq.qq.com" class="qq">超级QQ</a><a href="http://mgame.qq.com">手机游戏</a><a href="http://mobile.qq.com" class="qq">手机QQ</a><a href="http://mb.qq.com/">手机浏览器</a><a href="http://3gqq.qq.com/" class="qq">3GQQ</a><a href="http://m.qq.com">无线</a></div>
+	<div><span>生活</span> <a href="https://www.tenpay.com/">财付通</a><a href="http://www.paipai.com/">拍拍</a><a href="http://pay.qq.com/" class="qq">QQ充值</a><a href="http://life.tenpay.com/creditcard/">还信用卡</a><a href="http://tuan.qq.com/?us=qqcom" class="qq">QQ团购</a><a href="http://meishi.qq.com/" class="qq">QQ美食</a><a href="http://www.qq.com/map/" class="m" style="text-decoration:none;">更多</a></div>
+</div>
+	</div>
+<script type="text/javascript">
+var qbsearch = qbsearch || {};
+qbsearch.input = null;
+qbsearch.init = function(){
+	qbsearch.addCSS();
+	qbsearch.createSearchForm();
+};
+qbsearch.main = function(){
+	qbsearch.init();
+};
+
+qbsearch.showSearchForm= function(){
+	
+};
+
+qbsearch.addCSS = function(){
+	var aimcss = ".qbsearch_span{background:yellow} \n";
+	aimcss+=".qbsearch_span.selected{background:red} \n";
+	aimcss+="#qbsearch_maindiv{border:1px solid gray; position: fixed; top: 2px; right: 5px; background:white; border-radius:3px; } \n";
+	aimcss+="#qbsearch_input{width:200px,margin:3px;} \n";
+	aimcss+=".qbsearch_button{width:36px; height:36px ; background-size: 24px 24px;border:1px solid transparent;margin:3px;} \n";	
+	aimcss+=".qbsearch_button:hover{border:1px solid gray; border-radius:3px; }";
+	aimcss+="#qbsearch_msg{line-height: 24px; height: 24px; } \n";
+	aimcss+="#qbsearch_maindiv div{display:inline; } \n ";
+	aimcss+="#qbsearch_msg{color:gray;} \n";
+	aimcss+="#qbsearch_up{background:url(up.png) center center  no-repeat; } \n";
+	aimcss+="#qbsearch_down{background:url(down.png) center center no-repeat;} \n";
+	qbsearch.add_css(aimcss);
+};
+
+qbsearch.add_css = function(str_css){
+	if(document.createStyleSheet){
+		var style = document.createStyleSheet();
+		style.cssText = str_css;
+	}else{
+		var style = document.createElement("style");
+		style.type = "text/css";
+		style.textContent = str_css;
+		document.getElementsByTagName("HEAD").item(0).appendChild(style);
+	}
+};
+
+qbsearch.createSearchForm = function(){
+	var maindiv = document.createElement("div");
+	maindiv.setAttribute("id","qbsearch_maindiv");
+	var input = document.createElement("input");
+	input.setAttribute("id","qbsearch_input");
+	input.onkeyup = qbsearch.inputKeyUP;
+	qbsearch.input = input;
+	maindiv.appendChild(input);
+	var msg = document.createElement("div");
+	msg.setAttribute("id","qbsearch_msg");
+	qbsearch.msg = msg;
+	maindiv.appendChild(msg);
+	var butup = document.createElement("div");
+	butup.setAttribute("id","qbsearch_up");
+	butup.setAttribute("class","qbsearch_button");
+	butup.innerHTML = "&nbsp;&nbsp;";
+	butup.onclick = qbsearch.prev;
+	maindiv.appendChild(butup);
+	var butdown = document.createElement("div");
+	butdown.setAttribute("id","qbsearch_down");
+	butdown.setAttribute("class","qbsearch_button");
+	butdown.innerHTML = "&nbsp;&nbsp;";
+	butdown.onclick = qbsearch.next;
+	maindiv.appendChild(butdown);
+	document.body.appendChild(maindiv);
+};
+
+qbsearch.next = function(){
+	if (qbsearch.curr >= qbsearch.totlen-1){
+		return ; 
+	}else{
+		qbsearch.oldcurr = qbsearch.curr;
+		qbsearch.curr++;
+	}
+	qbsearch.updateMsg();
+};
+
+qbsearch.prev = function(){
+	if (qbsearch.curr<=0){
+		return ;
+	}else{
+		qbsearch.oldcurr = qbsearch.curr;
+		qbsearch.curr--;
+	}
+	qbsearch.updateMsg();
+};
+
+qbsearch.inputKeyUP = function(){
+	var code = event.keyCode;
+	qbsearch.doSearch();
+};
+qbsearch.hasCache = false;
+qbsearch.doSearch =function(){
+	var input = qbsearch.input;
+	var val = input.value;
+	if (""==val){
+		qbsearch.reload();
+		return;
+	}
+	if (!qbsearch.hasCache){
+		qbsearch.doCache();			
+	}
+	qbsearch.doFind(val);
+	qbsearch.updateMsg();
+};
+qbsearch.reload = function(){
+	qbsearch.clearMark();
+	qbsearch.totfind=0;
+	qbsearch.curr=0;
+	qbsearch.updateMsg();
+}
+qbsearch.updateMsg = function(){
+	var strmsg = "";
+	if (qbsearch.totfind){
+		strmsg = (qbsearch.curr+1)+"个,共"+qbsearch.totfind+"个";	
+	}
+	qbsearch.msg.innerText = strmsg;
+	var aimid = qbsearch.oldcurr;
+	if (aimid>=0){
+		var data = qbsearch.cache[qbsearch.findset[aimid]];	
+		var node = data.ptr;
+		var span = node.querySelector("span");
+		if (span){
+			var strclass = span.getAttribute("class");
+			strclass = strclass.replace("selected","");
+			span.setAttribute("class",strclass);
+		}
+	}
+	aimid = qbsearch.curr;
+	data = qbsearch.cache[qbsearch.findset[aimid]];	
+	if (data){
+		node = data.ptr;
+		span = node.querySelector("span");
+		if (span){
+			var strclass = span.getAttribute("class");
+			strclass+=" selected";
+			span.setAttribute("class",strclass);
+		}
+	}
+};
+qbsearch.cache=[];
+qbsearch.doCache = function(){
+	qbsearch.cache = [];
+	var walker = document.createTreeWalker(  document.body,
+					 NodeFilter.SHOW_ELEMENT,
+					 {
+						 acceptNode: function(node){
+							 if (node.childElementCount){
+							 	return NodeFilter.FILTER_SKIP; 
+							 }else{ // end node
+								var name = node.nodeName;
+								if (	"SCRIPT"== name ||
+									"STYLE" == name ||
+									"BR" ==name ||
+									"IMG" ==name ||
+									""== node.innerText ||
+									node.id.indexOf("qbsearch")>=0 ||
+									node.className.indexOf("qbsearch") >=0 ){
+									return NodeFilter.FILTER_SKIP; 
+								}	
+								return NodeFilter.FILTER_ACCEPT; 
+							 }
+						 }
+					 },
+ 					false);
+	
+	while(walker.nextNode()){
+		var node = walker.currentNode;
+		qbsearch.cache.push({
+			ptr:node,
+			oldtext:node.innerText
+		});
+	}
+	qbsearch.hasCache=true;
+	console.info("cache len: "+qbsearch.cache.length);
+
+};
+qbsearch.findset = [];
+qbsearch.totfind =0;
+qbsearch.curr =0;
+qbsearch.oldcurr=-1;
+qbsearch.doFind = function(val){
+	console.info("find: "+val);
+	qbsearch.clearMark();
+	var cache = qbsearch.cache;
+	var findset = qbsearch.findset;
+	var len = cache.length;
+	for (var i=0; i<len; i++){
+		var node = cache[i].ptr;
+		var oldtext = cache[i].oldtext;
+		var pos = oldtext.indexOf(val);
+		// 这里有问题，oldtest包含多个val
+		if (-1 != pos){ // found
+			var newHTML = oldtext.replace(val,"<span class='qbsearch_span'>"+val+"</span>");
+			node.innerHTML = newHTML;
+			findset.push(i);
+		}
+	}
+	qbsearch.totfind = findset.length;
+	qbsearch.curr = 0;
+};
+
+qbsearch.clearMark = function(){
+	var findset = qbsearch.findset;
+	var cache = qbsearch.cache;
+	var len = findset.length;
+	for (var i =0; i<len;i++){
+		var ind = findset[i];
+		var node = cache[ind].ptr;
+		var oldtext = cache[ind].oldtext;
+		node.innerText = oldtext;
+	}
+	qbsearch.findset=[];
+}
+// run main in the end
+
+qbsearch.main();
+</script>
+</body>
+</html>
