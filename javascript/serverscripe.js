@@ -38,6 +38,7 @@
                         window.lrc.obj=html;
                         var lrc = $(html).find('.text-lyric-abstract').text();
                         console.log(['lrc',lrc,html,data]);
+                        window.lrc.lrc=lrc;
 
                     },'html');       
                 console.log([window.cmusic.songName,window.cmusic]);
