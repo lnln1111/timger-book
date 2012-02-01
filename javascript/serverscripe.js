@@ -32,8 +32,11 @@
                 p.lf='2';
                 p.rn='10';
                 $.get(url,p,function(data){
+                        window.lrc={}
+                        window.lrc.html=data;
                         html=$(data);
-                        var lrc = html.find('.text-lyric-abstract').text();
+                        window.lrc.obj=html;
+                        var lrc = $(html).find('.text-lyric-abstract').text();
                         console.log(['lrc',lrc,html,data]);
 
                     },'html');       
