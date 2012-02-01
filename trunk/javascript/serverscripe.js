@@ -36,8 +36,8 @@
                         var lrc = html.find('.text-lyric-abstract').text();
                         console.log(['lrc',lrc])
                     },'html');       
+                console.log(['xx',window.cmusic]);
             }
-        //console.log(['xx',window.cmusic]);
         },1000);
         
         console.log(['ex is runing']);
