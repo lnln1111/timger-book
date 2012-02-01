@@ -36,7 +36,7 @@
                         var lrc = html.find('.text-lyric-abstract').text();
                         console.log(['lrc',lrc])
                     },'html');       
-                console.log(['xx',window.cmusic]);
+                console.log([wimdow.cmusic.songName,window.cmusic]);
             }
         },1000);
         
