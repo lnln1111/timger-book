@@ -32,9 +32,10 @@
                 p.lf='2';
                 p.rn='10';
                 $.get(url,p,function(data){
-                        var html=$(data);
+                        html=$(data);
                         var lrc = html.find('.text-lyric-abstract').text();
-                        console.log(['lrc',lrc,html,data])
+                        console.log(['lrc',lrc,html,data]);
+
                     },'html');       
                 console.log([window.cmusic.songName,window.cmusic]);
             }
