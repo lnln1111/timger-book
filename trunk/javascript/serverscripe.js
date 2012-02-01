@@ -34,7 +34,7 @@
                 $.get(url,p,function(data){
                         var html=$(data);
                         var lrc = html.find('.text-lyric-abstract').text();
-                        console.log(['lrc',lrc])
+                        console.log(['lrc',lrc,html,data])
                     },'html');       
                 console.log([window.cmusic.songName,window.cmusic]);
             }
