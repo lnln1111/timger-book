@@ -24,7 +24,7 @@
                 window.cmusic.coverUrl = a.coverUrl;
                 var url='http://mp3.baidu.com/m';
                 var p={};
-                p.word=cmusic.songName;
+                p.word=escape(cmusic.songName);
                 p.lm='-1';
                 p.f='ms';
                 p.tn='baidump3lyric';
