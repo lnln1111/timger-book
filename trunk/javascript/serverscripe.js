@@ -6,8 +6,7 @@
  */
 (function(){
         setTimeout(function(){ 
-                var a=document.getElementById('#ft-ads-slot');
-                a.style.visibility='hidden';
+                $('#ft-ads-slot').hide();
                         },1000);
         window.cmusic = {};
         setInterval(function(){
