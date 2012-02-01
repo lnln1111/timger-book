@@ -22,7 +22,7 @@
                 window.cmusic.url = a.url;
                 window.cmusic.coverUrl = a.coverUrl;
             }
-        console.log(['xx',window.cmusic]);
+        //console.log(['xx',window.cmusic]);
         },1000);
         console.log(['插件在运行']);
 })()
