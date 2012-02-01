@@ -22,7 +22,7 @@
                 window.cmusic.type = a.type;
                 window.cmusic.url = a.url;
                 window.cmusic.coverUrl = a.coverUrl;
-                var url='';
+                var url='http://mp3.baidu.com/m';
                 var p={};
                 p.word=cmusic.songName;
                 p.lm='-1';
