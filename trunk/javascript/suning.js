@@ -5,5 +5,5 @@
  * Copyright (c) 2008-2011 timger - released under MIT License {{{
  */
 (function(){
-    setInterval(function(){location.href=location.href},10)
+    setInterval(function(){location.href=location.href},10000)
 })()
